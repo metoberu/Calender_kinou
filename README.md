@@ -3,17 +3,21 @@
 
 import discord
 import datetime
-
-kyou= datetime.date.today()
-print(kyou)
-
-from google.colab import drive
-drive.mount('/content/drive')
-
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
 import pandas as pd
+
+#年、月、日の表示
+time = datetime.datetime.now()
+print(time.year)
+print(time.month)
+print(time.day)
+
+#シートとの連携
+from google.colab import drive
+drive.mount('/content/drive')
+
 
 SP_CREDENTIAL_FILE = '/content/calenderbot-359914-bef7f3a7f65c.json'
 SP_COPE = [
@@ -24,7 +28,7 @@ SP_COPE = [
   
 ]
 SP_SHEET_KEY = '1arFJ7kINskjhD8MJfUghj8gLnCme3oROck1LPJUjyxY'
-SP_SHEET = '2022_8'
+SP_SHEET = str(time.year)+"_"+str(time.month)
 
 credentials =ServiceAccountCredentials.from_json_keyfile_name(SP_CREDENTIAL_FILE, SP_COPE)
 gc = gspread.authorize(credentials)
@@ -43,17 +47,14 @@ data
 df = pd.DataFrame(data[2:],columns=data[1])
 df
 
-#セルに入力
+
+
+#セルに入力(例)
 st=sh.worksheet(SP_SHEET)
 st.update_acell("C22","中間発表")
 df
 
-#年、月、日の表示
-time = datetime.datetime.now()
-print(time.year)
-print(time.month)
-print(time.day)
 
-#セルの内容を読みだして書き加える
+#セルの内容を読みだして書き加える(例)
 st.update_cell(int(time.day)+2,4,"test")
 
