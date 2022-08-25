@@ -1,4 +1,4 @@
-# Calender_kinou
+# Calender_kinou.py
 カレンダー機能
 
 import discord
